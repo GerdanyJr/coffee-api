@@ -102,7 +102,7 @@ public class CoffeeApi implements CommandLineRunner {
 			coffee.setId(i);
 			coffee.setName(coffeeNames[i]);
 			coffee.setPrice(BigDecimal.valueOf(random.nextDouble() * 100));
-			coffee.setImage("/images/Image-" + random.nextInt(12) + ".png");
+			coffee.setImage("/images/Image-" + (random.nextInt(14) + 1) + ".png");
 			coffee.setDescription("Descrição do café " + coffeeNames[i]);
 			Set<Category> categories = new HashSet<>();
 			for (int j = 0; j < random.nextInt(4) + 1; j++) {
