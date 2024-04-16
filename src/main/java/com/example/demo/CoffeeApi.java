@@ -11,8 +11,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.example.demo.model.Category;
-import com.example.demo.model.Coffee;
+import com.example.demo.model.entities.Category;
+import com.example.demo.model.entities.Coffee;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.CoffeeRepository;
 

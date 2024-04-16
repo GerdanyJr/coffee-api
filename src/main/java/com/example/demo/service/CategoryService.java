@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.model.Category;
+import com.example.demo.model.entities.Category;
 import com.example.demo.repository.CategoryRepository;
 
 @Service
