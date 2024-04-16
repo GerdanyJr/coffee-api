@@ -9,4 +9,6 @@ import com.example.demo.model.entities.Coffee;
 
 public interface CoffeeRepository extends JpaRepository<Coffee, Integer> {
     Page<Coffee> findCoffeeByCategories(Category category, PageRequest pageRequest);
+
+    Page<Coffee> findCoffeeByNameStartingWithIgnoreCase(String name, PageRequest pageRequest);
 }

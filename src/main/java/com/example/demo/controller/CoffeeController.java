@@ -31,4 +31,11 @@ public class CoffeeController {
             @RequestParam(name = "page", required = false, defaultValue = "0") Integer page) {
         return ResponseEntity.ok(coffeeService.getAllCoffesByCategory(categoryId, page));
     }
+
+    @GetMapping("/name")
+    public ResponseEntity<PageResponse<Coffee>> getCoffeeByName(
+            @RequestParam("name") String name,
+            @RequestParam(name = "page", required = false, defaultValue = "0") Integer page) {
+        return ResponseEntity.ok(coffeeService.getCoffeesByName(name, page));
+    }
 }
