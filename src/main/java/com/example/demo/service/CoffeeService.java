@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.entities.Category;
 import com.example.demo.model.entities.Coffee;
 import com.example.demo.model.response.PageResponse;
@@ -36,7 +37,7 @@ public class CoffeeService {
         public PageResponse<Coffee> getAllCoffesByCategory(Integer categoryId, Integer page) {
                 Category category = categoryRepository
                                 .findById(categoryId)
-                                .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+                                .orElseThrow(() -> new NotFoundException("Categoria não encontrada"));
                 Page<Coffee> items = coffeeRepository.findCoffeeByCategories(category, PageRequest.of(page, PAGESIZE));
                 return pageMapper
                                 .toPageResponse(items);
