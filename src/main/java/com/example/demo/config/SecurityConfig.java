@@ -28,6 +28,8 @@ public class SecurityConfig {
                                 .permitAll()
                                 .requestMatchers(HttpMethod.POST, "/auth/**")
                                 .permitAll()
+                                .requestMatchers("/**")
+                                .permitAll()
                                 .anyRequest()
                                 .authenticated())
                                 .csrf(csrf -> csrf.disable())
