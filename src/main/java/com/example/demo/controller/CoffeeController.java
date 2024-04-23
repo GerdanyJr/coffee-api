@@ -24,8 +24,12 @@ public class CoffeeController {
 
     @GetMapping
     public ResponseEntity<PageResponse<Coffee>> getAllCoffees(
-            @RequestParam(name = "page", required = false, defaultValue = "0") Integer page) {
-        return ResponseEntity.ok(coffeeService.getAllCoffees(page));
+            @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+            @RequestParam(name = "direction", required = false, defaultValue = "asc") String direction,
+            @RequestParam(name = "sort", required = false, defaultValue = "price") String sort,
+            @RequestParam(name = "min", required = false, defaultValue = "0") Integer min,
+            @RequestParam(name = "max", required = false) Integer max) {
+        return ResponseEntity.ok(coffeeService.getAllCoffees(page, direction, sort, min, max));
     }
 
     @GetMapping("/{categoryId}")

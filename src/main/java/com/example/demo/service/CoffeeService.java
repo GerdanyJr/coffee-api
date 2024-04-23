@@ -1,7 +1,11 @@
 package com.example.demo.service;
 
+import java.math.BigDecimal;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.exception.NotFoundException;
@@ -27,11 +31,20 @@ public class CoffeeService {
                 this.pageMapper = pageMapper;
         }
 
-        public PageResponse<Coffee> getAllCoffees(Integer page) {
-                Page<Coffee> items = coffeeRepository
-                                .findAll(PageRequest.of(page, PAGESIZE));
-                return pageMapper
-                                .toPageResponse(items);
+        public PageResponse<Coffee> getAllCoffees(
+                        Integer page,
+                        String direction,
+                        String sort,
+                        Integer min,
+                        Integer max) {
+                Page<Coffee> items = coffeeRepository.findCoffeeByPriceBetween(
+                                BigDecimal.valueOf(min),
+                                BigDecimal.valueOf(max != null ? max : 10000),
+                                PageRequest.of(page,
+                                                PAGESIZE,
+                                                Sort.by(Direction.fromString(direction), sort)));
+
+                return pageMapper.toPageResponse(items);
         }
 
         public PageResponse<Coffee> getAllCoffesByCategory(Integer categoryId, Integer page) {
