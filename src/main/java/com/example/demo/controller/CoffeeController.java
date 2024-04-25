@@ -1,13 +1,17 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.model.entities.Category;
 import com.example.demo.model.entities.Coffee;
 import com.example.demo.model.response.PageResponse;
 import com.example.demo.service.CoffeeService;
@@ -28,8 +32,9 @@ public class CoffeeController {
             @RequestParam(name = "direction", required = false, defaultValue = "asc") String direction,
             @RequestParam(name = "sort", required = false, defaultValue = "price") String sort,
             @RequestParam(name = "min", required = false, defaultValue = "0") Integer min,
-            @RequestParam(name = "max", required = false) Integer max) {
-        return ResponseEntity.ok(coffeeService.getAllCoffees(page, direction, sort, min, max));
+            @RequestParam(name = "max", required = false) Integer max,
+            @RequestBody(required = false) List<Category> categories) {
+        return ResponseEntity.ok(coffeeService.getAllCoffees(page, direction, sort, min, max, categories));
     }
 
     @GetMapping("/{categoryId}")

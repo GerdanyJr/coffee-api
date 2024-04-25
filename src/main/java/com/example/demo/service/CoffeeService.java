@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,13 +37,25 @@ public class CoffeeService {
                         String direction,
                         String sort,
                         Integer min,
-                        Integer max) {
-                Page<Coffee> items = coffeeRepository.findCoffeeByPriceBetween(
-                                BigDecimal.valueOf(min),
-                                BigDecimal.valueOf(max != null ? max : 10000),
-                                PageRequest.of(page,
-                                                PAGESIZE,
-                                                Sort.by(Direction.fromString(direction), sort)));
+                        Integer max,
+                        List<Category> categories) {
+                Page<Coffee> items;
+                if (categories != null && !categories.isEmpty()) {
+                        items = coffeeRepository.findByCategoriesInAndPriceBetween(
+                                        categories,
+                                        BigDecimal.valueOf(min),
+                                        BigDecimal.valueOf(max != null ? max : 10000),
+                                        PageRequest.of(page,
+                                                        PAGESIZE,
+                                                        Sort.by(Direction.fromString(direction), sort)));
+                } else {
+                        items = coffeeRepository.findByPriceBetween(
+                                        BigDecimal.valueOf(min),
+                                        BigDecimal.valueOf(max != null ? max : 10000),
+                                        PageRequest.of(page,
+                                                        PAGESIZE,
+                                                        Sort.by(Direction.fromString(direction), sort)));
+                }
 
                 return pageMapper.toPageResponse(items);
         }
@@ -51,13 +64,13 @@ public class CoffeeService {
                 Category category = categoryRepository
                                 .findById(categoryId)
                                 .orElseThrow(() -> new NotFoundException("Categoria não encontrada"));
-                Page<Coffee> items = coffeeRepository.findCoffeeByCategories(category, PageRequest.of(page, PAGESIZE));
+                Page<Coffee> items = coffeeRepository.findByCategories(category, PageRequest.of(page, PAGESIZE));
                 return pageMapper
                                 .toPageResponse(items);
         }
 
         public PageResponse<Coffee> getCoffeesByName(String name, Integer page) {
-                Page<Coffee> items = coffeeRepository.findCoffeeByNameStartingWithIgnoreCase(name,
+                Page<Coffee> items = coffeeRepository.findByNameStartingWithIgnoreCase(name,
                                 PageRequest.of(page, PAGESIZE));
                 return pageMapper.toPageResponse(items);
         }
