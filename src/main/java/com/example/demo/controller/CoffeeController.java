@@ -44,6 +44,11 @@ public class CoffeeController {
         return ResponseEntity.ok(coffeeService.getAllCoffesByCategories(page, direction, sort, min, max, tagIds));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Coffee> getCoffeeById(@PathVariable("id") Integer id) {
+        return ResponseEntity.ok(coffeeService.getCoffeeById(id));
+    }
+
     @GetMapping("/name")
     public ResponseEntity<PageResponse<Coffee>> getCoffeeByName(
             @RequestParam("name") String name,

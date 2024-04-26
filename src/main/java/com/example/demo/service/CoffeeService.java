@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.entities.Category;
 import com.example.demo.model.entities.Coffee;
 import com.example.demo.model.response.PageResponse;
@@ -68,6 +69,11 @@ public class CoffeeService {
                 Page<Coffee> items = coffeeRepository.findByNameStartingWithIgnoreCase(name,
                                 PageRequest.of(page, PAGESIZE));
                 return pageMapper.toPageResponse(items);
+        }
+
+        public Coffee getCoffeeById(Integer id) {
+                return coffeeRepository.findById(id)
+                                .orElseThrow(() -> new NotFoundException("Café não encontrado com id " + id));
         }
 
 }
