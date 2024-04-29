@@ -37,13 +37,16 @@ public class CoffeeService {
                         String direction,
                         String sort,
                         Integer min,
-                        Integer max) {
-                Page<Coffee> items = coffeeRepository.findByPriceBetween(
+                        Integer max,
+                        String search) {
+                Page<Coffee> items = coffeeRepository.findByNameStartingWithIgnoreCaseAndPriceBetween(
+                                search,
                                 BigDecimal.valueOf(min),
                                 BigDecimal.valueOf(max != null ? max : 10000),
                                 PageRequest.of(page,
                                                 PAGESIZE,
                                                 Sort.by(Direction.fromString(direction), sort)));
+
                 return pageMapper.toPageResponse(items);
         }
 
@@ -53,12 +56,14 @@ public class CoffeeService {
                         String sort,
                         Integer min,
                         Integer max,
-                        String tagIds) {
+                        String tagIds,
+                        String search) {
                 List<Category> foundCategories = categoryRepository.findByIdIn(tagIds.split(","));
-                Page<Coffee> items = coffeeRepository.findByCategoriesInAndPriceBetween(
+                Page<Coffee> items = coffeeRepository.findByCategoriesInAndPriceBetweenAndNameStartingWithIgnoreCase(
                                 foundCategories,
                                 BigDecimal.valueOf(min),
                                 BigDecimal.valueOf(max != null ? max : 10000),
+                                search,
                                 PageRequest.of(page,
                                                 PAGESIZE,
                                                 Sort.by(Direction.fromString(direction), sort)));

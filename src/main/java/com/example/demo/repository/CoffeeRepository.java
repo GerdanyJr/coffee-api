@@ -13,10 +13,14 @@ import com.example.demo.model.entities.Coffee;
 public interface CoffeeRepository extends JpaRepository<Coffee, Integer> {
         Page<Coffee> findByCategories(Category category, PageRequest pageRequest);
 
-        Page<Coffee> findByCategoriesInAndPriceBetween(
+        Page<Coffee> findByNameStartingWithIgnoreCaseAndPriceBetween(String name, BigDecimal min, BigDecimal max,
+                        PageRequest pageRequest);
+
+        Page<Coffee> findByCategoriesInAndPriceBetweenAndNameStartingWithIgnoreCase(
                         List<Category> categories,
                         BigDecimal min,
                         BigDecimal max,
+                        String name,
                         PageRequest pageRequest);
 
         Page<Coffee> findByPriceBetween(

@@ -29,8 +29,9 @@ public class CoffeeController {
             @RequestParam(name = "direction", required = false, defaultValue = "asc") String direction,
             @RequestParam(name = "sort", required = false, defaultValue = "price") String sort,
             @RequestParam(name = "min", required = false, defaultValue = "0") Integer min,
-            @RequestParam(name = "max", required = false) Integer max) {
-        return ResponseEntity.ok(coffeeService.getAllCoffees(page, direction, sort, min, max));
+            @RequestParam(name = "max", required = false) Integer max,
+            @RequestParam(name = "search", required = false, defaultValue = "") String search) {
+        return ResponseEntity.ok(coffeeService.getAllCoffees(page, direction, sort, min, max, search));
     }
 
     @GetMapping("/category")
@@ -40,19 +41,14 @@ public class CoffeeController {
             @RequestParam(name = "sort", required = false, defaultValue = "price") String sort,
             @RequestParam(name = "min", required = false, defaultValue = "0") Integer min,
             @RequestParam(name = "max", required = false) Integer max,
-            @RequestParam(name = "tags", required = false) String tagIds) {
-        return ResponseEntity.ok(coffeeService.getAllCoffesByCategories(page, direction, sort, min, max, tagIds));
+            @RequestParam(name = "tags", required = false) String tagIds,
+            @RequestParam(name = "search", required = false, defaultValue = "") String search) {
+        return ResponseEntity
+                .ok(coffeeService.getAllCoffesByCategories(page, direction, sort, min, max, tagIds, search));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Coffee> getCoffeeById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(coffeeService.getCoffeeById(id));
-    }
-
-    @GetMapping("/name")
-    public ResponseEntity<PageResponse<Coffee>> getCoffeeByName(
-            @RequestParam("name") String name,
-            @RequestParam(name = "page", required = false, defaultValue = "0") Integer page) {
-        return ResponseEntity.ok(coffeeService.getCoffeesByName(name, page));
     }
 }
